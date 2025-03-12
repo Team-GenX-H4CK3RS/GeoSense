@@ -1,6 +1,12 @@
 # Geosense
 Geosense is a disaster prediction and monitoring system, focused on detecting landslides by analyzing various environmental factors. It utilizes real-time data such as rainfall, topography, slope, and seismic activity to provide accurate early warnings and insights into landslide-prone regions. It also helps in relief measures using satellite imaging, a chatbot for answering queries and government support.
 
+## Links
+
+- [NASA LHASA](https://github.com/nasa/LHASA)
+- [NASA SALaD](https://github.com/nasa/salad)
+- [Twilio Calls and Messages](https://colab.research.google.com/drive/1qtunTEC9H98VvkscGc-gcxHzYOLp3rmc?usp=sharing)
+
 Video Demo:
 -
 https://drive.google.com/file/d/1y3SvwV9bZ55OBQ0YQRPRHLDmADaHkMo0/view?usp=sharing
