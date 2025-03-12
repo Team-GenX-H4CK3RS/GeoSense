@@ -7,10 +7,6 @@ Geosense is a disaster prediction and monitoring system, focused on detecting la
 - [NASA SALaD](https://github.com/nasa/salad)
 - [Twilio Calls and Messages](https://colab.research.google.com/drive/1qtunTEC9H98VvkscGc-gcxHzYOLp3rmc?usp=sharing)
 
-Video Demo:
--
-https://drive.google.com/file/d/1y3SvwV9bZ55OBQ0YQRPRHLDmADaHkMo0/view?usp=sharing
-
 # The Prediction Phase
 # Features
 * Real-time Data Collection: Gathers live data such as rainfall, topography, and slope to detect potential landslide risks.
