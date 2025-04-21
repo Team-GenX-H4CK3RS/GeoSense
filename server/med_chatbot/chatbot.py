@@ -3,6 +3,7 @@ from med_chatbot.vector_store import get_or_create_vector_store, get_vector_stor
 from langchain_groq import ChatGroq
 from langchain_core.messages import HumanMessage, AIMessage
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from langchain.chains import create_history_aware_retriever, create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
 
@@ -10,19 +11,57 @@ from langchain.chains.combine_documents import create_stuff_documents_chain
 def init_chatbot(vectorstore):
     llm = ChatGroq(
         groq_api_key=os.getenv("GROQ_API_KEY"),
-        model_name="llama-3.3-70b-versatile"
+        model="deepseek-r1-distill-llama-70b", streaming=True,
+        callbacks=[StreamingStdOutCallbackHandler()]
     )
     retriever = vectorstore.as_retriever()
 
-    contextualize_q_system_prompt = (
-        "Given the chat history and the latest user question about medical issues or health-related topics, "
-        "reformulate the question to make it standalone and clear. "
-        "Do NOT answer the question, just reformulate it. "
-        "If it's already clear, return it as is."
-    )
+    system_message = """You are Garry, an AI assistant specialized in medical reasoning.
+    When answering questions, first show your step-by-step reasoning process,
+    then provide your final conclusion. I WANT YOU TO FOLLOW streaming approach And EVERYTIME GIVE YOUR URL REFERENCES AT THE END OF THE ANSWER.
+
+    CORE RULES:
+    1. REJECT ALL NON-MEDICAL QUERIES immediately with: "I only answer medical questions. Please ask about health, symptoms, treatments, or medical conditions."
+    2. DO NOT engage in general conversation or pleasantries
+    3. DO DRAW LINES WHICH SEPERATE THE thinking/reasoning part from the Original Answer part
+    4. ONLY provide medical information in this format:
+
+    ### Medical Response Format:
+    1. Topic Verification:
+    * Medical Category: [diagnosis/treatment/prevention]
+    * Medical Field: [relevant specialty]
+    * Urgency Level: [routine/urgent/emergency]
+
+    2. Clinical Information:
+    * Medical Definition: [term + simple explanation]
+    * Key Medical Facts: [bullet-point list]
+    * Scientific Background: [brief medical context]
+
+    3. Medical Guidance:
+    * Standard Protocol: [medical guidelines]
+    * Warning Signs: [when to seek care]
+    * Professional Advice: [medical recommendations]
+
+    RESPONSE VALIDATION:
+    - Must contain medical terminology
+    - Must include medical evidence basis
+    - Must have healthcare disclaimer
+    - Must stay within medical scope
+
+    AUTOMATIC REJECTION:
+    - Small talk/greetings
+    - Non-medical topics
+    - Personal opinions
+    - General advice
+
+    MANDATORY DISCLAIMER:
+    > Medical Notice: This is general medical information only.
+    > Consult healthcare professionals for personal medical advice.
+    > Emergency conditions require immediate medical attention."""
+
     contextualize_q_prompt = ChatPromptTemplate.from_messages(
         [
-            ("system", contextualize_q_system_prompt),
+            ("system", system_message),
             MessagesPlaceholder("chat_history"),
             ("human", "{input}"),  # The user's latest input
         ]
@@ -86,6 +125,9 @@ class Chat:
         print(f"AI: {result['answer']}")
         self.chat_history.append(HumanMessage(content=msg))
         self.chat_history.append(AIMessage(content=result["answer"]))
+        ans = result["answer"]
+        ans = ans.replace(".", ".\n\n")
+        ans = ans.replace("?", "?\n\n")
         return result['answer']
 
 

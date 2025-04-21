@@ -10,7 +10,7 @@ export type TranslationResult = {
 
 export default function useTranslate() {
   const fetchData = async (url, options = {}) => {
-    const response = await fetch("http://192.168.1.7:5500" + url, options);
+    const response = await fetch("http://10.11.159.177:5500" + url, options);
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
@@ -22,7 +22,7 @@ export default function useTranslate() {
   };
 
   const translate = async (langCode: string, text: string) => {
-    const response = await fetch(`${"http://192.168.1.7:5500"}/translate`, {
+    const response = await fetch(`${"http://10.11.159.177:5500"}/translate`, {
       body: JSON.stringify({ text, lang_code: langCode }),
       method: "POST",
       headers: {

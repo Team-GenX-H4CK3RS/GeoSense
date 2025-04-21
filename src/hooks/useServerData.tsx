@@ -2,7 +2,7 @@
 
 export default function useServerData() {
   const fetchData = async (url, options = {}) => {
-    const response = await fetch("http://192.168.1.7:5000" + url, options);
+    const response = await fetch("http://10.11.159.177:5000" + url, options);
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
@@ -65,19 +65,22 @@ export default function useServerData() {
   };
 
   const sendMedChatMsg = async (sessionId, msg) => {
-    const response = await fetch(`${"http://172.16.44.60:5000"}/medchat/send`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ sessionId, msg }),
-    });
+    const response = await fetch(
+      `${"http://10.11.159.177:5000"}/medchat/send`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ sessionId, msg }),
+      }
+    );
     const data = await response.json();
     return data.result;
   };
 
   const closeMedChatBot = async (sessionId) => {
-    await fetch(`${"http://172.16.44.60:5000"}/medchat/close`, {
+    await fetch(`${"http://10.11.159.177:5000"}/medchat/close`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -87,7 +90,7 @@ export default function useServerData() {
   };
 
   const convertSpeechToText = async (audio) => {
-    const response = await fetch(`${"http://172.16.44.60:5000"}/speechttext`, {
+    const response = await fetch(`${"http://10.11.159.177:5000"}/speechttext`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -99,7 +102,7 @@ export default function useServerData() {
   };
   const checkStatus = async (lat: number, lon: number) => {
     const response = await fetch(
-      `${"http://172.16.44.60:5000"}/alertstatus/${lat}/${lon}`,
+      `${"http://10.11.159.177:5000"}/alertstatus/${lat}/${lon}`,
       {
         headers: {
           "Content-Type": "application/json",

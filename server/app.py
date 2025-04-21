@@ -34,7 +34,9 @@ def api_nearbyplaces():
 @app.route('/gmaps/nearbyplaces/details')
 def api_nearbyplacedetails():
     place_id = request.args.get('place_id')
-    return jsonify(gmaps_handler.get_nearby_place_details(place_id))
+    data = gmaps_handler.get_nearby_place_details(place_id)
+    print(data)
+    return jsonify(data)
 
 
 @app.route('/gmaps/routes')
@@ -81,7 +83,7 @@ def api_medchat_send():
     return jsonify({'result': chatbot.send(sid, msg)})
 
 
-@app.route('/medchat/close')
+@app.route('/medchat/close', methods=["POST"])
 def api_medchat_close():
     sid = request.json.get('sessionId')
     chatbot.remove_chat(sid)
