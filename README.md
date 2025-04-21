@@ -1,11 +1,12 @@
 # Geosense
 Geosense is a disaster prediction and monitoring system, focused on detecting landslides by analyzing various environmental factors. It utilizes real-time data such as rainfall, topography, slope, and seismic activity to provide accurate early warnings and insights into landslide-prone regions. It also helps in relief measures using satellite imaging, a chatbot for answering queries and government support.
 
-Video Demo:
--
-https://drive.google.com/file/d/1y3SvwV9bZ55OBQ0YQRPRHLDmADaHkMo0/view?usp=sharing
+## Links
 
-# The Prediction Phase
+- [NASA LHASA](https://github.com/nasa/LHASA)
+- [NASA SALaD](https://github.com/nasa/salad)
+- [Twilio Calls and Messages](https://colab.research.google.com/drive/1qtunTEC9H98VvkscGc-gcxHzYOLp3rmc?usp=sharing)
+
 # Features
 * Real-time Data Collection: Gathers live data such as rainfall, topography, and slope to detect potential landslide risks.
   
@@ -69,13 +70,13 @@ To manage the aftermath of the disaster, we have incorporated 3 strategies:
 2. Satellite Imaging using QGIS.
 3. Government Support.
 
-# Medical Chatbot
+## Medical Chatbot
 A simple but efficient chatbot designed to answer basic queries about first aid and related health issues. When given a particular location, the chatbot will first identify the coordinates (latitude and longitude) of the location. Then it will find the nearest bloodbank, hospital, hotel, pharmacy, food store rations and any other safe landmark nearby so that the people can leverage it to their requirements.
 
 The chatbot is basically fed with some general intents and the random module is used.
 It has been trained with a book "The Gale encyclopedia of Medicine" by Jacqueline L. Longe trained by Llama 3.0.
 
-# Satellite imaging using QGIS
+## Satellite imaging using QGIS
 The analysis performed here are:
 1. Heatmap analyis for population density.
 2. NASA Sentinel data.
